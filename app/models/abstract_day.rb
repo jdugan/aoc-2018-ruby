@@ -13,13 +13,23 @@ class AbstractDay
   #--------------------------------------------------------
 
   def self.p1
+    res = nil
     obj = self.instance
-    obj.p1
+    time = Benchmark.realtime do
+      res = obj.p1
+    end
+    puts "Real: #{ (time * 1000).round(3) }ms"
+    res
   end
 
   def self.p2
+    res = nil
     obj = self.instance
-    obj.p2
+    time = Benchmark.realtime do
+      res = obj.p2
+    end
+    puts "Real: #{ (time * 1000).round(3) }ms"
+    res
   end
 
 
