@@ -76,7 +76,8 @@ class Day03 < AbstractDay
     end
 
     def overlap?(result)
-      keys.map { |k| result[k] > 1 }.any?
+      h = result.slice(*keys)
+      h.any? { |k,v| v > 1 }
     end
 
   end
