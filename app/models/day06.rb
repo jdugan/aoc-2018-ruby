@@ -4,10 +4,6 @@ class Day06 < AbstractDay
   # Public Methods
   #--------------------------------------------------------
 
-  # Using only the Manhattan distance, determine the area around each coordinate by
-  # counting the number of integer X,Y locations that are closest to that coordinate
-  # (and aren't tied in distance to any other coordinate).
-  #
   def p1
     # manhattan.danger_visualization
     manhattan.danger_area
@@ -80,7 +76,7 @@ class Day06 < AbstractDay
     #---------- safe methods ------------------------------
 
     def safe_area
-      distance_map.values.map { |v| v[:safe] }.select { |v| v < SAFE_LIMIT }.size
+      distance_map.values.select { |v| v[:safe] < SAFE_LIMIT }.size
     end
 
     def safe_visualization
