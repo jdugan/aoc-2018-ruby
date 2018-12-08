@@ -23,8 +23,8 @@ class Day07 < AbstractDay
 
   def rules
     @rules ||= begin
+      exp = Regexp.new 'Step ([A-Z]) must be finished before step ([A-Z]) can begin.'
       data.map do |r|
-        exp = Regexp.new 'Step ([A-Z]) must be finished before step ([A-Z]) can begin.'
         r.split(exp).slice(1,2)
       end
     end
@@ -41,6 +41,7 @@ class Day07 < AbstractDay
   # Inner Classes
   #--------------------------------------------------------
 
+  #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   class Node
 
     #========== CONFIGURATION =============================
@@ -228,6 +229,8 @@ class Day07 < AbstractDay
 
 
     #========== PUBLIC METHODS ============================
+
+    #---------- actions -----------------------------------
 
     def assign!(n, dur)
       if idle?
