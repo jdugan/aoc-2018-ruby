@@ -1,19 +1,6 @@
 module Day07
   module Helpers
-    class Tree
-
-      #----------------------------------------------------
-      # Configuration
-      #----------------------------------------------------
-
-      # attributes
-      attr_reader :rules
-
-      # constructor
-      def initialize(hash)
-        @rules = hash[:rules]
-      end
-
+    Tree = Struct.new(:data) do
 
       #----------------------------------------------------
       # Public Methods
@@ -66,6 +53,13 @@ module Day07
         na = an.sort { |a,b| a.id <=> b.id }
       end
 
+      def reset!
+        nodes.values.each(&:reset!)
+      end
+
+
+      #========== DATA ====================================
+
       def nodes
         @nodes ||= begin
           rules.reduce({}) do |hash, (s1, s2)|
@@ -80,8 +74,13 @@ module Day07
         end
       end
 
-      def reset!
-        nodes.values.each(&:reset!)
+      def rules
+        @rules ||= begin
+          regex = Regexp.new 'Step ([A-Z]) must be finished before step ([A-Z]) can begin.'
+          rules = data.map do |r|
+            r.split(regex).slice(1,2)
+          end
+        end
       end
 
     end

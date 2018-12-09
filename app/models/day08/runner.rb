@@ -21,10 +21,7 @@ module Day08
     private
 
     def tree
-      @tree ||= begin
-        numbers = data.first.split(' ').map(&:to_i)
-        Day08::Helpers::Tree.new(numbers: numbers)
-      end
+      @tree ||= Helpers::Tree.new(data)
     end
 
   end

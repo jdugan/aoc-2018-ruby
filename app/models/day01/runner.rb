@@ -19,10 +19,7 @@ module Day01
     private
 
     def calculator
-      @calculator ||= begin
-        freqs = Array(data).map(&:to_i)
-        Day01::Helpers::Calculator.new(freqs)
-      end
+      @calculator ||= Helpers::Calculator.new(data)
     end
 
   end

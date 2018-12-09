@@ -84,4 +84,13 @@ class AbstractRunner
     end
   end
 
+
+  #========== STATE HELPERS ===============================
+
+  MODES.each do |m|
+    define_method "#{ m }?" do
+      mode == m
+    end
+  end
+
 end

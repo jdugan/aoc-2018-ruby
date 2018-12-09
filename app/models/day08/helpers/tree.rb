@@ -1,19 +1,6 @@
 module Day08
   module Helpers
-    class Tree
-
-      #----------------------------------------------------
-      # Configuration
-      #----------------------------------------------------
-
-      # attributes
-      attr_reader :numbers
-
-      # constructor
-      def initialize(hash)
-        @numbers = hash[:numbers]
-      end
-
+    Tree = Struct.new(:data) do
 
       #----------------------------------------------------
       # Public Methods
@@ -35,6 +22,8 @@ module Day08
       #----------------------------------------------------
       private
 
+      #========== ACTIONS =================================
+
       def add_children(nums, node)
         if node.neutered?
           node.metadata = nums.shift(node.expected_metadata)
@@ -46,6 +35,15 @@ module Day08
           header = nums.shift(2)
           child  = Node.new(header, node, [], [])
           add_children(nums, child)
+        end
+      end
+
+
+      #========== DATA ====================================
+
+      def numbers
+        @numbers ||= begin
+          data.first.split(' ').map(&:to_i)
         end
       end
 

@@ -1,6 +1,6 @@
 module Day01
   module Helpers
-    Calculator = Struct.new(:frequencies) do
+    Calculator = Struct.new(:data) do
 
       #------------------------------------------------------
       # Public Methods
@@ -28,6 +28,16 @@ module Day01
 
       def sum
         frequencies.sum
+      end
+
+
+      #------------------------------------------------------
+      # Public Methods
+      #------------------------------------------------------
+      private
+
+      def frequencies
+        @frequencies ||= Array(data).map(&:to_i)
       end
 
     end

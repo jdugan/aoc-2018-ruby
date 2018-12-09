@@ -1,4 +1,4 @@
-module Day02
+module Day10
   class Runner < AbstractRunner
 
     #------------------------------------------------------
@@ -6,12 +6,12 @@ module Day02
     #------------------------------------------------------
 
     def p1
-      calculator.checksum
+      sky.message
     end
 
 
     def p2
-      calculator.common_characters
+      sky.time
     end
 
 
@@ -20,8 +20,8 @@ module Day02
     #------------------------------------------------------
     private
 
-    def calculator
-      @calculator ||= Helpers::Calculator.new(data)
+    def sky
+      @sky ||= Helpers::Sky.new(data, 0)
     end
 
   end

@@ -1,6 +1,6 @@
 module Day02
   module Helpers
-    Calculator = Struct.new(:boxes) do
+    Calculator = Struct.new(:data) do
 
       #----------------------------------------------------
       # Public Methods
@@ -35,6 +35,18 @@ module Day02
           end
         end
         answer
+      end
+
+
+      #----------------------------------------------------
+      # Public Methods
+      #----------------------------------------------------
+      private
+
+      def boxes
+        @boxes ||= begin
+          data.map { |id| Box.new(id.strip, {}) }
+        end
       end
 
     end

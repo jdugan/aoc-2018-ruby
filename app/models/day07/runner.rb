@@ -21,14 +21,7 @@ module Day07
     private
 
     def tree
-      @tree ||= begin
-        regex = Regexp.new 'Step ([A-Z]) must be finished before step ([A-Z]) can begin.'
-        rules = data.map do |r|
-          r.split(regex).slice(1,2)
-        end
-
-        Day07::Helpers::Tree.new(rules: rules)
-      end
+      @tree ||= Helpers::Tree.new(data)
     end
 
   end

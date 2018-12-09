@@ -25,7 +25,7 @@ module Day09
     #========== OBJECTS ===================================
 
     def game
-      @game ||= Day09::Helpers::Game.new
+      @game ||= Helpers::Game.new
     end
 
 
