@@ -7,6 +7,7 @@ module Day10
       #----------------------------------------------------
 
       def message
+        reset!
         ps = message_points
         print(ps)
       end
@@ -56,6 +57,11 @@ module Day10
         puts ''
         puts ''
         nil
+      end
+
+      def reset!
+        @working_points = nil
+        self[:clock] = 0
       end
 
 
