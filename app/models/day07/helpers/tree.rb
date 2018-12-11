@@ -62,7 +62,10 @@ module Day07
 
       def nodes
         @nodes ||= begin
-          rules.reduce({}) do |hash, (s1, s2)|
+          regex = Regexp.new 'Step ([A-Z]) must be finished before step ([A-Z]) can begin.'
+          data.reduce({}) do |hash, s|
+            s1, s2 = s.split(regex).slice(1, 2)
+
             n1 = hash[s1] ||= Node.new(id: s1)
             n2 = hash[s2] ||= Node.new(id: s2)
 
@@ -70,15 +73,6 @@ module Day07
             n2.add_parent(n1)
 
             hash
-          end
-        end
-      end
-
-      def rules
-        @rules ||= begin
-          regex = Regexp.new 'Step ([A-Z]) must be finished before step ([A-Z]) can begin.'
-          rules = data.map do |r|
-            r.split(regex).slice(1,2)
           end
         end
       end

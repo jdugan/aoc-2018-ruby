@@ -37,12 +37,10 @@ module Day03
       def patterns
         @patterns ||= begin
           data.map do |s|
-            parts  = s.strip.split(' ')
-            id     = parts[0].gsub('#', '').to_i
-            coords = parts[2].gsub(':', '').split(',').map(&:to_i)
-            dims   = parts[3].split('x').map(&:to_i)
+            regex = Regexp.new('^\#(\d+) @ (\d+),(\d*): (\d+)x(\d+)$')
+            parts = s.split(regex).slice(1, 5).map(&:to_i)
 
-            Pattern.new(id, coords.first, coords.last, dims.first, dims.last)
+            Pattern.new(*parts)
           end
         end
       end

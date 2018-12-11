@@ -8,7 +8,7 @@ module Day08
 
       def root
         @root ||= begin
-          nums   = numbers.map { |n| n }  # make a copy
+          nums   = Marshal.load(Marshal.dump(numbers))  # make a copy
           header = nums.shift(2)
           root   = Node.new(header, nil, [], [])
           add_children(nums, root)

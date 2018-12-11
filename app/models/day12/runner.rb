@@ -1,4 +1,4 @@
-module Day11
+module Day12
   class Runner < AbstractRunner
 
     #------------------------------------------------------
@@ -6,12 +6,12 @@ module Day11
     #------------------------------------------------------
 
     def p1
-      grid.largest_defined(3)
+      main.something
     end
 
 
     def p2
-      grid.largest_undefined
+      main.something
     end
 
 
@@ -20,11 +20,8 @@ module Day11
     #------------------------------------------------------
     private
 
-    def grid
-      @grid ||= begin
-        serial = data.first.to_i
-        Helpers::Grid.new(serial)
-      end
+    def main
+      @main ||= Helpers::Main.new(data)
     end
 
   end

@@ -1,4 +1,4 @@
-module Day11
+module Day12
   module Helpers
     Main = Struct.new(:data) do
 

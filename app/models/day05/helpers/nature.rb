@@ -48,9 +48,9 @@ module Day05
         has_change = false
         while is_first || has_change
           sz = str.size
-          destructors.each do |d|
-            str.gsub!(d, '')
-            str.gsub!(d.reverse, '')
+          destructors.each do |d|               # this hits a kind of sweet spot between
+            str.gsub!(d, '')                    # minimising loops and maximising opportunities
+            str.gsub!(d.reverse, '')            # for reactions
           end
           is_first   = false
           has_change = str.size < sz
