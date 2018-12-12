@@ -1,4 +1,4 @@
-module Day12
+module Day13
   class Runner < AbstractRunner
 
     #------------------------------------------------------
@@ -6,12 +6,12 @@ module Day12
     #------------------------------------------------------
 
     def p1
-      world.total_at(20)
+      main.something
     end
 
 
     def p2
-      world.total_at(50000000000)
+      main.something
     end
 
 
@@ -20,8 +20,8 @@ module Day12
     #------------------------------------------------------
     private
 
-    def world
-      @world ||= Helpers::World.new(data)
+    def main
+      @main ||= Helpers::Main.new(data)
     end
 
   end

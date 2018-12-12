@@ -23,7 +23,7 @@ module Day11
     def grid
       @grid ||= begin
         serial = data.first.to_i
-        Helpers::Grid.new(serial)
+        Helpers::Grid.new(serial, 300)
       end
     end
 
