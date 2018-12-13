@@ -6,12 +6,12 @@ module Day13
     #------------------------------------------------------
 
     def p1
-      main.something
+      traffic.first_accident
     end
 
 
     def p2
-      main.something
+      traffic.last_car_standing
     end
 
 
@@ -20,8 +20,8 @@ module Day13
     #------------------------------------------------------
     private
 
-    def main
-      @main ||= Helpers::Main.new(data)
+    def traffic
+      @traffic ||= Helpers::Traffic.new(data)
     end
 
   end
