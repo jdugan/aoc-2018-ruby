@@ -32,9 +32,9 @@ module Day09
         reset(max_players)
 
         (1..max_marble).each do |marble|
-          if marble % 10000 == 0                  # rudimentary progress bar
-            puts marble
-          end
+          # if marble % 10000 == 0                  # rudimentary progress bar
+          #   puts marble
+          # end
 
           np = next_player
           m0 = board[marble_index]
