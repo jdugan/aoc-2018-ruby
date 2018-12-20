@@ -16,11 +16,18 @@ module Day18
       #========== ANSWERS =================================
 
       def value_after(iterations)
-        # print
-        iterations.times do |n|
+        n = 0
+        iterations.times do
           next!
-          # print
-          puts "#{ clock }: #{ score }"
+          register_score!(score, n)
+          n = n + 1
+          break if period
+        end
+        if p = period
+          ri = (iterations - n) % p
+          ri.times do
+            next!
+          end
         end
         score
       end
@@ -57,6 +64,11 @@ module Day18
         tick!
       end
 
+      def register_score!(score, n)
+        score_hash[score] ||= []
+        score_hash[score] << n
+      end
+
       def snapshot!
         self[:snapshot] = Marshal.load( Marshal.dump(squares) )
       end
@@ -66,32 +78,11 @@ module Day18
       end
 
 
-      #========== HELPERS =================================
-
-      def counts
-        hash = { lumberyard: 0, open: 0, trees: 0 }
-        squares.each do |row|
-          row.each do |sq|
-            case
-            when sq.lumberyard?
-              hash[:lumberyard] = hash[:lumberyard] + 1
-            when sq.open?
-              hash[:open] = hash[:open] + 1
-            else
-              hash[:trees] = hash[:trees] + 1
-            end
-          end
-        end
-        hash
-      end
-
-      def score
-        ch = counts
-        ch[:lumberyard] * ch[:trees]
-      end
-
-
       #========== MEMOS ===================================
+
+      def score_hash
+        @score_hash ||= {}
+      end
 
       def squares
         @squares ||= begin
@@ -113,6 +104,53 @@ module Day18
           sqs
         end
       end
+
+
+      #========== SCORES HELPERS ==========================
+
+      def counts
+        hash = { lumberyard: 0, open: 0, trees: 0 }
+        squares.each do |row|
+          row.each do |sq|
+            case
+            when sq.lumberyard?
+              hash[:lumberyard] = hash[:lumberyard] + 1
+            when sq.open?
+              hash[:open] = hash[:open] + 1
+            else
+              hash[:trees] = hash[:trees] + 1
+            end
+          end
+        end
+        hash
+      end
+
+      def period
+        p  = nil
+        sh = score_hash.select { |k,v| v.size > 3 }
+        sh.each do |k,v|
+          vs = v.slice(-3, 3).reverse
+          p1 = vs[0] - vs[1]
+          p2 = vs[1] - vs[2]
+          if p1 == p2
+            p = p1
+            break
+          else
+            score_hash[k] = [vs[0]]
+          end
+        end
+        p
+      end
+
+      def score
+        ch = counts
+        ch[:lumberyard] * ch[:trees]
+      end
+
+
+      #========== STATE HELPERS ===========================
+
+
 
     end
   end
