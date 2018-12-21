@@ -6,20 +6,42 @@ module Day21
       # Public Methods
       #----------------------------------------------------
 
-      # The routine is an elaborate method for summing the
-      # factors of a number. We run the loop until we get
-      # the fixed value in r4, then we can exit the loop and
-      # just do some ordinary math.
-      #
-      def run(seed)
-        w = Watch.new(ip, [seed, 0, 0, 0, 0, 0])
-        while w.ip_value != 1
-          cmd = commands[w.ip_value]
+      def shortest_r0
+        w = Watch.new(ip, [0, 0, 0, 0, 0, 0])
+        while w.ip_value != 28
+          cmd  = commands[w.ip_value]
           w.send(*cmd)
           w.increment_ip_value!
         end
-        fa = factorise(w.registry[4])
-        fa.sum
+        w.registry[3]
+      end
+
+      def longest_r0
+        a = []
+        d = false
+        n = 0
+        w = Watch.new(ip, [0, 0, 0, 0, 0, 0])
+
+        while d == false
+          cmd = commands[w.ip_value]
+          w.send(*cmd)
+          w.increment_ip_value!
+
+          if w.ip_value == 28
+            n = n + 1
+            r = w.registry[3]
+            if a.include?(r)
+              puts "Duplicate: #{ r }"
+              d = true
+            else
+              a << r
+            end
+            if n % 500 == 0
+              puts n
+            end
+          end
+        end
+        a.last
       end
 
 
@@ -30,15 +52,7 @@ module Day21
 
       #========== HELPERS =================================
 
-      def factorise(num)
-        fa  = [1, num]
-        (2..Integer.sqrt(num)).each do |i|
-          if num % i == 0
-            fa << i
-            fa << num / i
-          end
-        end
-        fa
+      def next_r0(prev_r0)
       end
 
 
