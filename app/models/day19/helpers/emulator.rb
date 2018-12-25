@@ -1,4 +1,4 @@
-module Day21
+module Day19
   module Helpers
     Emulator = Struct.new(:data) do
 
@@ -12,7 +12,7 @@ module Day21
       # just do some ordinary math.
       #
       def run(seed)
-        w = Watch.new(ip, [seed, 0, 0, 0, 0, 0])
+        w = Watch.new(ip: ip, registry: [seed, 0, 0, 0, 0, 0])
         while w.ip_value != 1
           cmd = commands[w.ip_value]
           w.send(*cmd)

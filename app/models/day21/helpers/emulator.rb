@@ -7,7 +7,7 @@ module Day21
       #----------------------------------------------------
 
       def shortest_r0
-        w = Watch.new(ip, [0, 0, 0, 0, 0, 0])
+        w = Watch.new(ip: ip, registry: [0, 0, 0, 0, 0, 0])
         while w.ip_value != 28
           cmd  = commands[w.ip_value]
           w.send(*cmd)
@@ -20,7 +20,7 @@ module Day21
         a = []
         d = false
         n = 0
-        w = Watch.new(ip, [0, 0, 0, 0, 0, 0])
+        w = Watch.new(ip: ip, registry: [0, 0, 0, 0, 0, 0])
 
         while d == false
           cmd = commands[w.ip_value]
@@ -49,12 +49,6 @@ module Day21
       # Private Methods
       #----------------------------------------------------
       private
-
-      #========== HELPERS =================================
-
-      def next_r0(prev_r0)
-      end
-
 
       #========== MEMOS ===================================
 

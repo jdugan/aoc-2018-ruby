@@ -1,4 +1,4 @@
-module Day99
+module Day24
   class Runner < AbstractRunner
 
     #------------------------------------------------------
@@ -6,12 +6,13 @@ module Day99
     #------------------------------------------------------
 
     def p1
-      main.something
+      emulator.winning_units
     end
 
 
     def p2
-      main.something
+      emulator.boost!(42)
+      emulator.winning_units
     end
 
 
@@ -20,8 +21,8 @@ module Day99
     #------------------------------------------------------
     private
 
-    def main
-      @main ||= Helpers::Main.new(data)
+    def emulator
+      @emulator ||= Helpers::Emulator.new(data)
     end
 
   end
