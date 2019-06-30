@@ -16,9 +16,9 @@ The examples are representative of my thinking and coding style.
 
 ### Prerequisites
 
-The project requires `ruby 2.5.3`, though any reasonably current version of Ruby will likely work.
+The project requires `ruby 2.6.3`, though any reasonably current version of Ruby will likely work.
 
-If you use a ruby manager that responds to `.tool-versions` or `ruby-version`, you should be switched to `2.5.3` automatically.
+If you use a ruby manager that responds to `.tool-versions` or `ruby-version`, you should be switched to `2.6.3` automatically.
 
 
 ### Installation

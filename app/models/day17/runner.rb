@@ -6,12 +6,12 @@ module Day17
     #------------------------------------------------------
 
     def p1
-      emulator.water_table
+      emulator.flowing_size
     end
 
 
     def p2
-      # noop
+      emulator.retained_size
     end
 
 
