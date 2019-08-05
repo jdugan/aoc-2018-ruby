@@ -26,10 +26,11 @@ module Day17
         @grid ||= begin
           g = Grid.new(data)
           g.flow!
+          g.print
           g
         end
       end
-      
+
     end
   end
 end

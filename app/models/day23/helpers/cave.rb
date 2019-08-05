@@ -7,11 +7,16 @@ module Day23
       #----------------------------------------------------
 
       def best_distance
-        bb = best_bots.sort_by(&:last).last
-        bp = bb.first
-        br = bb.last
-
-        bp.x.abs + bp.y.abs + bp.z.abs - br
+        bh = bots.reduce({}) do |hash, bot|
+          hash[bot.id] = bot.neighbours(bots).size
+          hash
+        end
+        puts bh.inspect
+        # bb = best_bots.sort_by(&:last).last
+        # bp = bb[0]
+        # br = bb[1]
+        #
+        # bp.x.abs + bp.y.abs + bp.z.abs - br
         # op = Point.new(0, 0, 0)
         # bp = best_points
         # bp.map { |p| p.manhattan(op) }.sort.first

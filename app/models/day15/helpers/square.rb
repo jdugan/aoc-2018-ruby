@@ -51,6 +51,32 @@ module Day15
       end
 
 
+      #========== SIBLING HELPERS =========================
+
+      def available_neighbors
+        neighbors.select(&:available?)
+      end
+
+      def occupied_neighbors
+        neighbors.select(&:occupied?)
+      end
+
+      def neighbors
+        @neighbors ||= begin
+          keys = ['n', 'w', 'e', 's']
+          sqs  = keys.map { |k| siblings[k] }.compact.reject(&:wall?)
+          sqs.sort    # always return squares in reading order
+        end
+      end
+
+
+      #========== SORT HELPERS ============================
+
+      def reading_index
+        [y, x]
+      end
+
+
       #========== STATE HELPERS ===========================
 
       def available?
@@ -63,6 +89,13 @@ module Day15
 
       def wall?
         symbol == '#'
+      end
+
+
+      #========== UTILITY =================================
+
+      def <=>(other)
+        reading_index <=> other.reading_index
       end
 
     end

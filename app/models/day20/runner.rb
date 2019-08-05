@@ -6,12 +6,12 @@ module Day20
     #------------------------------------------------------
 
     def p1
-      main.something
+      router.longest
     end
 
 
     def p2
-      main.something
+      # noop
     end
 
 
@@ -20,8 +20,8 @@ module Day20
     #------------------------------------------------------
     private
 
-    def route_tree
-      @route_tree ||= Helpers::RouteTree.new(data)
+    def router
+      @router ||= Helpers::Router.new(data)
     end
 
   end

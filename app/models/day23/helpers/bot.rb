@@ -7,10 +7,8 @@ module Day23
       #----------------------------------------------------
 
       def neighbours(bots)
-        @neighbours ||= begin
-          bots.reject do |b|
-            point.manhattan(b.point) > radius
-          end
+        bots.reject do |b|
+          point.manhattan(b.point) > radius
         end
       end
 

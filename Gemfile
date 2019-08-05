@@ -21,6 +21,9 @@ gem 'sqlite3'
 gem 'bootsnap'
 gem 'puma'
 
+# algorithms
+gem 'dijkstra_graph'
+gem 'shortest_path'
 
 
 #----------------------------------------------

@@ -6,8 +6,7 @@ module Day15
     #------------------------------------------------------
 
     def p1
-      game.load_data
-      # game.battle_royale
+      game.battle_royale
     end
 
 
