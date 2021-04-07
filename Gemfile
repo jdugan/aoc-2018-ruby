@@ -4,7 +4,7 @@
 
 source 'http://rubygems.org'
 
-ruby '2.6.3'
+ruby '3.0.0'
 
 
 #----------------------------------------------
@@ -12,7 +12,7 @@ ruby '2.6.3'
 #----------------------------------------------
 
 # rails, etc.
-gem 'rails',              '5.2.3'
+gem 'rails',              '6.1.3.1'
 
 # database
 gem 'sqlite3'
@@ -22,8 +22,7 @@ gem 'bootsnap'
 gem 'puma'
 
 # algorithms
-gem 'dijkstra_graph'
-gem 'shortest_path'
+# gem 'dijkstra_graph'
 
 
 #----------------------------------------------

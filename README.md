@@ -16,9 +16,9 @@ The examples are representative of my thinking and coding style.
 
 ### Prerequisites
 
-The project requires `ruby 2.6.3`, though any reasonably current version of Ruby will likely work.
+The project requires `ruby 3.0.0`, though any reasonably current version of Ruby will likely work.
 
-If you use a ruby manager that responds to `.tool-versions` or `ruby-version`, you should be switched to `2.6.3` automatically.
+If you use a ruby manager that responds to `.tool-versions`, you should be switched to `3.0.0` automatically.
 
 
 ### Installation
@@ -26,8 +26,8 @@ If you use a ruby manager that responds to `.tool-versions` or `ruby-version`, y
 The project installs like any simple Rails application.
 
 ```
-$ git clone https://github.com/jdugan/advent-2018-ruby.git
-$ cd advent-2018-ruby
+$ git clone https://github.com/jdugan/aoc-2018-ruby.git
+$ cd aoc-2018-ruby
 $ bundle install
 $ cp .env.example .env
 ```
