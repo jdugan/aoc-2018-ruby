@@ -12,7 +12,7 @@ ruby '3.0.0'
 #----------------------------------------------
 
 # rails, etc.
-gem 'rails',              '6.1.3.1'
+gem 'rails',              '6.1.4.1'
 
 # database
 gem 'sqlite3'
