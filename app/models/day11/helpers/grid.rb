@@ -34,7 +34,7 @@ module Day11
         area   = power_area_min(300) - 1
         sizes.each do |size|
           sa = largest_defined(size)
-          puts "#{ size }: #{ sa.inspect } (#{ sa.last })"
+          # puts "#{ size }: #{ sa.inspect } (#{ sa.last })"
           if sa.last > area
             answer = sa
             area   = sa.last

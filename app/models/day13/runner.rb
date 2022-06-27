@@ -6,12 +6,14 @@ module Day13
     #------------------------------------------------------
 
     def p1
-      traffic.first_accident
+      coords = traffic.first_accident
+      coords.join(",")
     end
 
 
     def p2
-      traffic.last_car_standing
+      coords = traffic.last_car_standing
+      coords.join(",")
     end
 
 

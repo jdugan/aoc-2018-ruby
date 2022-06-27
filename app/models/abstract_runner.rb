@@ -4,14 +4,8 @@ class AbstractRunner
   # Configuration
   #--------------------------------------------------------
 
-  # constants
-  MODES ||= [:prod, :test].freeze
-
   # mixins
   include Singleton
-
-  # attributes
-  attr_accessor :mode
 
 
   #--------------------------------------------------------
@@ -63,14 +57,7 @@ class AbstractRunner
   def data_path
     @data_path ||= begin
       folder = self.class.name.deconstantize.downcase
-      "#{ Rails.root }/app/models/#{ folder }/data"
-    end
-  end
-
-  def mode
-    @mode ||= begin
-      em = ENV['AOC_MODE'].to_s.to_sym
-      MODES.find { |m| m == em } || :prod
+      "#{ Rails.root }/public/data/#{ folder }"
     end
   end
 
@@ -79,17 +66,8 @@ class AbstractRunner
 
   def data
     @data ||= begin
-      str = File.read("#{ data_path }/#{ mode }.txt")
+      str = File.read("#{ data_path }/input.txt")
       str.split("\n").reject(&:blank?)
-    end
-  end
-
-
-  #========== STATE HELPERS ===============================
-
-  MODES.each do |m|
-    define_method "#{ m }?" do
-      mode == m
     end
   end
 

@@ -20,9 +20,9 @@ module Day14
         while last_run != target_run
           turn!(true)
           n = n + 1
-          puts "#{ n }: #{ last_run }" if n % 1000000 == 0
+          # puts "#{ n }: #{ last_run }" if n % 1000000 == 0
         end
-        last_recipe.id - target_run.size + 1
+        last_recipe.id - target_run.size
       end
 
 

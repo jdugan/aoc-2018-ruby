@@ -1,52 +1,46 @@
 module Day02
   module Helpers
-    Calculator = Struct.new(:data) do
+    class Calculator < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :boxes
+
 
       #----------------------------------------------------
       # Public Methods
       #----------------------------------------------------
 
       def checksum
-        c2 = 0
-        c3 = 0
-        boxes.each do |b|
-          c2 = c2 + b.two_count
-          c3 = c3 + b.three_count
+        counts = boxes.reduce([0, 0]) do |arr, box|
+          box = box.with_counts
+          c2  = arr.first + box.two_count
+          c3  = arr.last  + box.three_count
+          [c2, c3]
         end
-        c2 * c3
+        counts.reduce(&:*)
       end
 
       def common_characters
-        answer = nil
-        copy   = boxes.map { |b| Box.new(b.id, {}) }
+        result     = nil
+        last_index = boxes.size - 1
 
-        boxes.each do |box1|
-          copy.each do |box2|
-            uc = box1.uncommon_characters(box2)
+        boxes.each.with_index do |b1, i|
+          (i + 1..last_index).each do |j|
+            b2 = boxes[j]
+            uc = b1.uncommon_characters(b2)
             if uc.size == 1
-              answer = box1.id.gsub(uc.first, '')
+              result = b1.id.gsub(uc.first, '')
               break
             end
           end
-          if answer.present?
+          if result.present?
             break
-          else
-            copy.delete(box1)
           end
         end
-        answer
-      end
-
-
-      #----------------------------------------------------
-      # Public Methods
-      #----------------------------------------------------
-      private
-
-      def boxes
-        @boxes ||= begin
-          data.map { |id| Box.new(id.strip, {}) }
-        end
+        result
       end
 
     end

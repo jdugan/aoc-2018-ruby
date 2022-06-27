@@ -6,12 +6,14 @@ module Day11
     #------------------------------------------------------
 
     def p1
-      grid.largest_defined(3)
+      coords = grid.largest_defined(3).first(2)
+      coords.join(",")
     end
 
 
     def p2
-      grid.largest_undefined
+      coords = grid.largest_undefined.first(3)
+      coords.join(",")
     end
 
 

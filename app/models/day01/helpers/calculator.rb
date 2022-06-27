@@ -1,43 +1,39 @@
 module Day01
   module Helpers
-    Calculator = Struct.new(:data) do
+    class Calculator < Tableless
 
-      #------------------------------------------------------
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :deltas
+
+
+      #----------------------------------------------------
       # Public Methods
-      #------------------------------------------------------
+      #----------------------------------------------------
 
       def first_duplicate
-        fmap = { 0 => true }
-        freq = 0
-        dupl = nil
+        freq_set = Set.new([0])
+        freq     = 0
+        found    = false
 
-        while dupl.nil? do                  # the list must be looped many times
-          frequencies.each do |fc|          # to find a duplicate frequency.
-            nf = freq + fc
-            if fmap.has_key?(nf)
-              dupl = nf
+        while !found do
+          deltas.each do |df|
+            freq = freq + df
+            if freq_set.include?(freq)
+              found = true
               break
-            else
-              fmap[nf] = true
-              freq     = nf
             end
+            freq_set = freq_set.add(freq)
           end
         end
-        dupl
+
+        freq
       end
 
       def sum
-        frequencies.sum
-      end
-
-
-      #------------------------------------------------------
-      # Public Methods
-      #------------------------------------------------------
-      private
-
-      def frequencies
-        @frequencies ||= Array(data).map(&:to_i)
+        deltas.sum
       end
 
     end

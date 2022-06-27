@@ -50,15 +50,15 @@ module Day24
           end
 
           # progress
-          puts '='*80
-          puts n
-          armies.each do |a|
-            puts a.name
-            a.groups.each do |g|
-              puts "#{ g.id }, #{ g.units.select(&:alive?).size }, #{ g.targeting.id rescue nil }"
-            end
-          end
-          puts '='*80
+          # puts '='*80
+          # puts n
+          # armies.each do |a|
+          #   puts a.name
+          #   a.groups.each do |g|
+          #     puts "#{ g.id }, #{ g.units.select(&:alive?).size }, #{ g.targeting.id rescue nil }"
+          #   end
+          # end
+          # puts '='*80
         end
 
         # answer

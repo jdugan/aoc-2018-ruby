@@ -6,13 +6,13 @@ module Day06
     #------------------------------------------------------
 
     def p1
-      calculator.danger_visualization  if test?
+      # calculator.danger_visualization
       calculator.danger_area
     end
 
 
     def p2
-      calculator.safe_visualization    if test?
+      # calculator.safe_visualization
       calculator.safe_area
     end
 
@@ -32,9 +32,7 @@ module Day06
     #========== HELPERS ===================================
 
     def safe_limit
-      @safe_limit ||= begin
-        sl = test? ? 32 : 10000
-      end
+      @safe_limit ||= 10000
     end
 
   end
