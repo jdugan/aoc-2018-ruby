@@ -1,5 +1,5 @@
 module Day01
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -19,7 +19,11 @@ module Day01
     private
 
     def calculator
-      @calculator ||= Helpers::Calculator.new(data)
+      @calculator ||= Helpers::Calculator.new(deltas: deltas)
+    end
+
+    def deltas
+      @deltas ||= Array(raw_data).map(&:to_i)
     end
 
   end

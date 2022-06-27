@@ -1,76 +1,43 @@
 module Day02
   module Helpers
-    Box = Struct.new(:id, :checkmap) do
+    class Box < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :id
+      attr_accessor :two_count
+      attr_accessor :three_count
+
 
       #----------------------------------------------------
       # Public Methods
       #----------------------------------------------------
 
-      #========== COUNTS ==================================
-
-      def two_count
-        if checkmap[:two].nil?
-          add_counts
-        end
-        checkmap[:two]
-      end
-
-      def three_count
-        if checkmap[:three].nil?
-          add_counts
-        end
-        checkmap[:three]
-      end
-
-
-      #========== PAIRS ===================================
+      #========== COMPARISONS =============================
 
       def uncommon_characters(other)
-        ca = []
-        aa = id.split('')
-        ba = other.id.split('')
-        aa.each_with_index do |c, i|
-          unless aa[i] == ba[i]
-            ca << aa[i]
+        a1 = id.split('')
+        a2 = other.id.split('')
+
+        (0..a1.size - 1).reduce([]) do |arr, i|
+          if a1[i] != a2[i]
+            arr << a1[i]
           end
-          if ca.size > 1
-            break
-          end
+          arr
         end
-        ca
       end
 
 
-      #----------------------------------------------------
-      # Private Methods
-      #----------------------------------------------------
-      private
+      #========== COUNTS ==================================
 
-      def add_counts
-        checkmap[:two]   = 0
-        checkmap[:three] = 0
+      def with_counts
+        freqs = id.split('').tally
 
-        raw = id.split('').sort
-        unq = raw.uniq
-
-        unless raw == unq
-          c2 = 0
-          c3 = 0
-          raw.each do |c|
-            c = raw.count(c)
-            case c
-            when 2
-              c2 = 1
-            when 3
-              c3 = 1
-            end
-            if c2 == 1 && c3 == 1
-              break
-            end
-          end
-          checkmap[:two]   = c2
-          checkmap[:three] = c3
-        end
+        self.two_count   = freqs.select { |k, v| v == 2 }.size > 0 ? 1 : 0
+        self.three_count = freqs.select { |k, v| v == 3 }.size > 0 ? 1 : 0
+        self
       end
 
     end
