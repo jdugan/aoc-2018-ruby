@@ -1,5 +1,5 @@
 module Day23
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -21,7 +21,18 @@ module Day23
     private
 
     def cave
-      @cave ||= Helpers::Cave.new(data)
+      @cave ||= begin
+        regexp = Regexp.new('^pos=<(-?\d+),(-?\d+),(-?\d+)>,\s+r=(\d+)$')
+        id     = 0
+
+        bots = raw_data.map do |str|
+          x, y, z, radius = str.split(regexp).slice(1, 4).map(&:to_i)
+          id = id + 1
+          Helpers::Bot.new(id: id, x: x, y: y, z: z, radius: radius)
+        end
+
+        Helpers::Cave.new(bots: bots)
+      end
     end
 
   end

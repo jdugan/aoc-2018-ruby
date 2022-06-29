@@ -1,5 +1,5 @@
 module Day13
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -23,7 +23,7 @@ module Day13
     private
 
     def traffic
-      @traffic ||= Helpers::Traffic.new(data)
+      @traffic ||= Helpers::Traffic.new(raw_data)
     end
 
   end

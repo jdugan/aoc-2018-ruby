@@ -1,6 +1,16 @@
 module Day11
   module Helpers
-    Cell = Struct.new(:x, :y, :power, :sum) do
+    class Cell < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :x
+      attr_accessor :y
+      attr_accessor :power
+      attr_accessor :sum
+
 
       #----------------------------------------------------
       # Public Methods

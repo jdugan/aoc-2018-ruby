@@ -1,30 +1,42 @@
 module Day15
   module Helpers
-    Game = Struct.new(:data) do
+    class Game
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      # attributes
+      attr_accessor :initial_state
+      attr_accessor :elf_strength
+      attr_accessor :goblin_strength
+
+      # constructor
+      def initialize(opts={})
+        @initial_state   = opts.fetch(:initial_state)
+        @elf_strength    = opts.fetch(:elf_strength)
+        @goblin_strength = opts.fetch(:goblin_strength)
+      end
+
 
       #----------------------------------------------------
       # Public Methods
       #----------------------------------------------------
 
-      def battle_royale
-        reset!
+      def battle_royale(strict=false)
+        # print(:initial) if printable
+
+        # capture starting state
+        initial_elf_count = elf_count
+
+        # play game until victory
         turns = 0
-
-        print(:initial)
-
         while multiple_teams?
-          reset_order!
           warriors.each do |w|
             # move & attack, if possible
             if w.alive?
               unless w.has_opponent?
-                dest_ids = targetable_squares_for(w).map(&:id)
-                if dest_ids.present?
-                  sid = w.calculate_step(dest_ids)
-                  if sq = board[sid]
-                    w.relocate!(sq)
-                  end
-                end
+                relocate_warrior!(w)
               end
               w.attack!
             end
@@ -32,38 +44,152 @@ module Day15
             # count
             if w == warriors.last
               turns = turns + 1
-              print(turns)
-            else
-              break if victory?
+              # print(turns) if printable
+            elsif victory?
+              break
             end
           end
-          break if turns == 2
+
+          # if strict mode and any elf dies, stop
+          if strict && initial_elf_count != elf_count
+            break
+          end
+
+          reorder_warriors!
         end
 
-        reset_order!
-        health = warriors.map(&:health).sum
-        score  = health * turns
+        # determine score
+        score    = turns * warriors.map(&:health).sum
+        elf_died = initial_elf_count != elf_count
 
-        print(:final)
-        puts ''
-        puts '='*80
-        puts 'Summary'
-        puts '-'*80
-        puts "warriors: #{ warriors.map(&:health).inspect }"
-        puts "health: #{ health }"
-        puts "turns:  #{ turns }"
-        puts "score:  #{ score }"
-        puts '='*80
-        puts ''
+        # print(:final)
+        # puts ''
+        # puts '='*80
+        # puts 'Summary'
+        # puts '-'*80
+        # puts "elf strength:  #{ elf_strength }"
+        # puts "warrior count: #{ warriors.size }"
+        # puts "warriors:      #{ warriors.map(&:health).inspect }"
+        # puts "total health:  #{ total_health }"
+        # puts "turns:         #{ turns }"
+        # puts "winning score: #{ winning_score }"
+        # puts "winning team:  #{ winning_team }"
+        # puts "all survived?: #{ all_survived }"
+        # puts '='*80
+        # puts ''
 
-        [health, turns, score]
+        [ score, elf_died ]
       end
 
+
+      #----------------------------------------------------
+      # Private Methods
+      #----------------------------------------------------
+      private
+
+      #========== DATA HELPERS ============================
+
+      def squares
+        @squares ||= begin
+          warrior_id = 0
+          hash       = {}
+
+          initial_state.each.with_index do |str, y|
+            str.strip.split('').each.with_index do |sym, x|
+              case sym
+              when '#', '.'
+                square = Helpers::Square.new(x: x, y: y, symbol: sym)
+              else
+                warrior_id = warrior_id + 1
+                strength   = sym == 'E' ? elf_strength : goblin_strength
+                warrior    = Helpers::Warrior.new(id: warrior_id, team: sym, strength: strength)
+                square     = Helpers::Square.new(x: x, y: y, symbol: '.', warrior: warrior)
+                warrior.square = square
+              end
+              hash[square.id] = square
+            end
+          end
+
+          hash.values.each do |sq|
+            sq.siblings['e'] = hash[sq.east_id]
+            sq.siblings['n'] = hash[sq.north_id]
+            sq.siblings['s'] = hash[sq.south_id]
+            sq.siblings['w'] = hash[sq.west_id]
+          end
+
+          hash
+        end
+      end
+
+      def warriors
+        @warriors ||= begin
+          squares.values.map(&:warrior).compact
+        end
+      end
+
+
+      #========== BATTLE HELPERS ==========================
+
+      def calculate_step(warrior, targets)
+        # build graph
+        graph = DijkstraFast::Graph.new
+        squares.values.select(&:available?).each do |s1|
+          s1.available_neighbors.each do |s2|
+            graph.add(s1.id, s2.id, distance: 1)
+          end
+        end
+
+        # set defaults
+        shortest_distance = 999999
+        shortest_id       = ""
+
+        # check paths from adjacent squares rather than
+        # from warrior's square so we can control for
+        # reading order when there are ties (because
+        # collections of squares are always in reading
+        # order).
+        origin_ids = warrior.targetable_squares.sort.map(&:id)
+        targets.sort.map(&:id).each do |target_id|
+          origin_ids.each do |origin_id|
+            begin
+              distance, _  = graph.shortest_path(origin_id, target_id)
+              if distance < shortest_distance
+                shortest_distance = distance
+                shortest_id       = origin_id
+              end
+            rescue DijkstraFast::NoPathExistsError
+              # ignore
+            end
+          end
+          hash
+        end
+
+        # return square (or nil)
+        squares[shortest_id]
+      end
+
+      def relocate_warrior!(warrior)
+        targets = targetable_squares_for(warrior)
+        if targets.present?
+          if square = calculate_step(warrior, targets)
+            warrior.relocate!(square)
+          end
+        end
+      end
+
+      def reorder_warriors!
+        @warriors = warriors.reject(&:dead?).sort
+      end
+
+
+      #========== PRINT HELPERS ===========================
+
       def print(turns)
-        xmax = board.values.map(&:y).max
-        ymax = board.values.map(&:y).max
+        sqs  = squares.values
+        xmax = sqs.map(&:y).max
+        ymax = sqs.map(&:y).max
         matrix = Array.new(ymax + 1) { Array.new(xmax + 1) }
-        board.values.each do |sq|
+        sqs.each do |sq|
           matrix[sq.y][sq.x] = sq.print
         end
 
@@ -82,35 +208,14 @@ module Day15
       end
 
 
-      #----------------------------------------------------
-      # Private Methods
-      #----------------------------------------------------
-      private
+      #========== STATUS HELPERS ==========================
 
-      #========== ACTIONS =================================
-
-      def reset!
-        @board    = nil
-        @warriors = nil
+      def elf_count
+        warriors.select { |w| w.elf? }.size
       end
-
-      def reset_order!
-        @warriors = warriors.reject(&:dead?).sort
-      end
-
-
-      #========== GAME HELPERS ============================
 
       def multiple_teams?
         warriors.reject(&:dead?).map(&:team).uniq.size > 1
-      end
-
-      def targetable_squares_for(current)
-        targets_for(current).flat_map(&:targetable_squares).uniq
-      end
-
-      def targets_for(current)
-        warriors.select { |w| w.alive? && w.enemy?(current) }
       end
 
       def victory?
@@ -118,42 +223,14 @@ module Day15
       end
 
 
-      #========== MEMOS ===================================
+      #========== TARGET HELPERS ==========================
 
-      def board
-        @board ||= begin
-          board = {}
-          wid   = 0
-          data.each.with_index do |str, y|
-            sqs = str.strip.split('').each.with_index do |sym, x|
-              case sym
-              when '#', '.'
-                warrior = nil
-              else
-                wid     = wid + 1
-                warrior = Warrior.new(wid, sym, 3, 200, nil)
-                sym     = '.'
-              end
-              square         = Square.new(x, y, sym, {}, warrior)
-              warrior.square = square if warrior
-
-              board[square.id] = square
-            end
-          end
-          board.values.each do |sq|
-            sq.siblings['e'] = board[sq.east_id]
-            sq.siblings['n'] = board[sq.north_id]
-            sq.siblings['s'] = board[sq.south_id]
-            sq.siblings['w'] = board[sq.west_id]
-          end
-          board
-        end
+      def targetable_squares_for(current)
+        targets_for(current).flat_map(&:targetable_squares).uniq
       end
 
-      def warriors
-        @warriors ||= begin
-          board.values.map(&:warrior).compact
-        end
+      def targets_for(current)
+        warriors.select { |w| w.alive? && w.enemy?(current) }
       end
 
     end

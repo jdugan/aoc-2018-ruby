@@ -1,5 +1,5 @@
 module Day11
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -24,8 +24,7 @@ module Day11
 
     def grid
       @grid ||= begin
-        serial = data.first.to_i
-        Helpers::Grid.new(serial, 300)
+        Helpers::Grid.new(serial: raw_data.first.to_i, dimension: 300)
       end
     end
 
