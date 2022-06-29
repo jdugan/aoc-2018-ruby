@@ -1,6 +1,16 @@
 module Day10
   module Helpers
-    Point = Struct.new(:x, :y, :vx, :vy) do
+    class Point < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :x
+      attr_accessor :y
+      attr_accessor :vx
+      attr_accessor :vy
+
 
       #----------------------------------------------------
       # Public Methods
@@ -9,15 +19,15 @@ module Day10
       def backward!(steps=1)
         history[0] = { x: x, y: y }
 
-        self[:x] = x - (vx * steps)
-        self[:y] = y - (vy * steps)
+        self.x = x - (vx * steps)
+        self.y = y - (vy * steps)
       end
 
       def forward!(steps=1)
         history[0] = { x: x, y: y }
 
-        self[:x] = x + (vx * steps)
-        self[:y] = y + (vy * steps)
+        self.x = x + (vx * steps)
+        self.y = y + (vy * steps)
       end
 
 
@@ -25,7 +35,7 @@ module Day10
       # Private Methods
       #----------------------------------------------------
       private
-      
+
       def history
         @history ||= begin
           [ { x: x, y: y } ]

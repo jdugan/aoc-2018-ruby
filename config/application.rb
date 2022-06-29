@@ -29,12 +29,12 @@ module Advent
 
     #========== DEFAULTS (RAILS) ==========================
 
-    config.load_defaults 5.1
+    config.load_defaults 7.0
 
 
     #========== DEFAULTS (API) ============================
 
     config.api_only = true
-    
+
   end
 end

@@ -1,6 +1,17 @@
 module Day03
   module Helpers
-    Pattern = Struct.new(:id, :x, :y, :w, :h) do
+    class Pattern < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :id
+      attr_accessor :x
+      attr_accessor :y
+      attr_accessor :w
+      attr_accessor :h
+
 
       #----------------------------------------------------
       # Public Methods

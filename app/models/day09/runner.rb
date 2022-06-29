@@ -1,5 +1,5 @@
 module Day09
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -22,19 +22,17 @@ module Day09
     #------------------------------------------------------
     private
 
-    #========== OBJECTS ===================================
-
     def game
       @game ||= Helpers::Game.new
     end
 
 
-    #========== DATA ======================================
+    #========== HELPERS ===================================
 
     def inputs
       @inputs ||= begin
         regex  = Regexp.new('(\d+) players; last marble is worth (\d+) points')
-        inputs = data.first.split(regex).slice(1,2).map(&:to_i)
+        inputs = raw_data.first.split(regex).slice(1,2).map(&:to_i)
       end
     end
 

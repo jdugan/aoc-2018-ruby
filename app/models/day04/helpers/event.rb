@@ -1,6 +1,14 @@
 module Day04
   module Helpers
-    Event = Struct.new(:min, :action) do
+    class Event < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :min
+      attr_accessor :action
+
 
       #----------------------------------------------------
       # Public Methods

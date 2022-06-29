@@ -1,5 +1,5 @@
 module Day08
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -21,7 +21,10 @@ module Day08
     private
 
     def tree
-      @tree ||= Helpers::Tree.new(data)
+      @tree ||= begin
+        numbers = raw_data.first.split(' ').map(&:to_i)
+        Helpers::Tree.new(numbers: numbers)
+      end
     end
 
   end

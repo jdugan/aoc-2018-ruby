@@ -1,18 +1,23 @@
 module Day06
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
+
+    #------------------------------------------------------
+    # Configuration
+    #------------------------------------------------------
+
+    SAFE_LIMIT ||= 10000
+
 
     #------------------------------------------------------
     # Public Methods
     #------------------------------------------------------
 
     def p1
-      # calculator.danger_visualization
       calculator.danger_area
     end
 
 
     def p2
-      # calculator.safe_visualization
       calculator.safe_area
     end
 
@@ -25,14 +30,19 @@ module Day06
     #========== OBJECTS ===================================
 
     def calculator
-      @calculator ||= Helpers::Calculator.new(data, safe_limit)
+      @calculator ||= begin
+        Helpers::Calculator.new(grid: grid, safe_limit: SAFE_LIMIT)
+      end
     end
 
-
-    #========== HELPERS ===================================
-
-    def safe_limit
-      @safe_limit ||= 10000
+    def grid
+      @grid ||= begin
+        points = raw_data.map.with_index do |str, id|
+          coords = str.split(',').map(&:to_i)
+          Helpers::Point.new(id: id, coords: coords)
+        end
+        Helpers::Grid.new(points: points)
+      end
     end
 
   end

@@ -1,6 +1,13 @@
 module Day08
   module Helpers
-    Tree = Struct.new(:data) do
+    class Tree < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :numbers
+
 
       #----------------------------------------------------
       # Public Methods
@@ -10,7 +17,7 @@ module Day08
         @root ||= begin
           nums   = Marshal.load(Marshal.dump(numbers))  # make a copy
           header = nums.shift(2)
-          root   = Node.new(header, nil, [], [])
+          root   = Node.new(header: header, parent: nil, children: [], metadata: [])
           add_children(nums, root)
           root
         end
@@ -33,17 +40,8 @@ module Day08
           end
         else
           header = nums.shift(2)
-          child  = Node.new(header, node, [], [])
+          child  = Node.new(header: header, parent: node, children: [], metadata: [])
           add_children(nums, child)
-        end
-      end
-
-
-      #========== DATA ====================================
-
-      def numbers
-        @numbers ||= begin
-          data.first.split(' ').map(&:to_i)
         end
       end
 

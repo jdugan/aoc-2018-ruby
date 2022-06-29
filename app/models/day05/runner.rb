@@ -1,5 +1,5 @@
 module Day05
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #--------------------------------------------------------
     # Public Methods
@@ -21,7 +21,7 @@ module Day05
     private
 
     def nature
-      @nature ||= Helpers::Nature.new(data)
+      @nature ||= Helpers::Nature.new(polymer: raw_data.first)
     end
 
   end
