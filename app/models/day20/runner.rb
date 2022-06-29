@@ -1,17 +1,17 @@
 module Day20
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
     #------------------------------------------------------
 
     def p1
-      router.longest
+      grid.most_doors
     end
 
 
     def p2
-      # noop
+      grid.distant_rooms(1000)
     end
 
 
@@ -20,8 +20,13 @@ module Day20
     #------------------------------------------------------
     private
 
-    def router
-      @router ||= Helpers::Router.new(data)
+    def grid
+      @grid ||= begin
+        expression = raw_data.first
+        expression = expression.slice(1, expression.size - 2).downcase
+
+        Helpers::Grid.new(expression: expression)
+      end
     end
 
   end

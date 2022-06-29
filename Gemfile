@@ -22,4 +22,4 @@ gem 'bootsnap'
 gem 'puma'
 
 # algorithms
-# gem 'dijkstra_graph'
+gem 'dijkstra_fast'

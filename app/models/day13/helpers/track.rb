@@ -1,6 +1,6 @@
 module Day13
   module Helpers
-    Track = Struct.new(:x, :y, :symbol, :siblings) do
+    Track = Struct.new(:x,:y,:symbol, :siblings) do
 
       #----------------------------------------------------
       # Public Methods

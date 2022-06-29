@@ -1,6 +1,14 @@
 module Day12
   module Helpers
-    World = Struct.new(:data) do
+    class World < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :initial_state
+      attr_accessor :rules
+
 
       #----------------------------------------------------
       # Private Methods
@@ -71,27 +79,6 @@ module Day12
 
         jump = (n == generation) ? 0 : (generation - n) * diffs.last
         scores.last + jump
-      end
-
-
-      #==========  DATA ===================================
-
-      def initial_state
-        @initial_state ||= begin
-          data.first.gsub('initial state: ', '').strip
-        end
-      end
-
-      def rules
-        @rules ||= begin
-          a = data.slice(1..-1).map do |str|
-            regex = Regexp.new('^([\.#]{5}) => ([\.#])$')
-            parts = str.split(regex).slice(1, 2)
-
-            parts.first   if parts.last == '#'
-          end
-          a.compact
-        end
       end
 
     end

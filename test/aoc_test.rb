@@ -63,11 +63,11 @@ class AocTest < ActiveSupport::TestCase
   #   assert_equal Day09::Runner.p1, 398502
   #   assert_equal Day09::Runner.p2, 3352920421     #   ~7s
   # end
-  test 'day10 runner yields correct answers' do
-    puts ''
-    assert_equal Day10::Runner.p1, 'ZRABXXJC'
-    assert_equal Day10::Runner.p2, 10710
-  end
+  # test 'day10 runner yields correct answers' do
+  #   puts ''
+  #   assert_equal Day10::Runner.p1, 'ZRABXXJC'
+  #   assert_equal Day10::Runner.p2, 10710
+  # end
   # test 'day11 runner yields correct answers' do
   #   puts ''
   #   assert_equal Day11::Runner.p1, '20,62'
@@ -86,14 +86,13 @@ class AocTest < ActiveSupport::TestCase
   # test 'day14 runner yields correct answers' do
   #   puts ''
   #   assert_equal Day14::Runner.p1, '9315164154'
-  #   assert_equal 20231866, 20231866
-  #   # assert_equal Day14::Runner.p2, 20231866       #   ~75s
+  #   assert_equal Day14::Runner.p2, 20231866       #   ~17s
   # end
-  # # test 'day15 runner yields correct answers' do
-  # #   puts ''
-  # #   assert_equal Day15::Runner.p1, -1
-  # #   assert_equal Day15::Runner.p2, -1
-  # # end
+  # test 'day15 runner yields correct answers' do
+  #   puts ''
+  #   assert_equal Day15::Runner.p1, 178003         # ~ 7s
+  #   assert_equal Day15::Runner.p2, 48722          # ~ 144s
+  # end
   # test 'day16 runner yields correct answers' do
   #   puts ''
   #   assert_equal Day16::Runner.p1, 493
@@ -115,10 +114,10 @@ class AocTest < ActiveSupport::TestCase
   #   assert_equal Day19::Runner.p1, 1824
   #   assert_equal Day19::Runner.p2, 21340800
   # end
-  # # test 'day20 runner yields correct answers' do
-  # #   assert_equal Day20::Runner.p1, -1
-  # #   assert_equal Day20::Runner.p2, -1
-  # # end
+  test 'day20 runner yields correct answers' do
+    assert_equal Day20::Runner.p1, -1
+    assert_equal Day20::Runner.p2, -1
+  end
   # test 'day21 runner yields correct answers' do
   #   puts ''
   #   assert_equal Day21::Runner.p1, 7216956

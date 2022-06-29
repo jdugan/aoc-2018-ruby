@@ -1,5 +1,5 @@
 module Day12
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -21,7 +21,17 @@ module Day12
     private
 
     def world
-      @world ||= Helpers::World.new(data)
+      @world ||= begin
+        state = raw_data.first.gsub('initial state: ', '').strip
+        rules = raw_data.slice(1..-1).map do |str|
+          regex = Regexp.new('^([\.#]{5}) => ([\.#])$')
+          parts = str.split(regex).slice(1, 2)
+
+          parts.first   if parts.last == '#'
+        end.compact
+
+        Helpers::World.new(initial_state: state, rules: rules)
+      end
     end
 
   end

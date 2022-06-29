@@ -1,17 +1,19 @@
 module Day14
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
     #------------------------------------------------------
 
     def p1
-      game.last_ten
+      game.play_until_size(target_size + 10)
+      game.scores.slice(target_size, 10)
     end
 
 
     def p2
-      game.recipes_before_run
+      game.play_until_run(target_run)
+      game.scores.index(target_run)
     end
 
 
@@ -21,7 +23,15 @@ module Day14
     private
 
     def game
-      @game ||= Helpers::Game.new(data)
+      @game ||= Helpers::Game.new
+    end
+
+    def target_size
+      @target_size ||= raw_data.first.to_i
+    end
+
+    def target_run
+      @target_run ||= raw_data.last.to_s
     end
 
   end

@@ -1,6 +1,14 @@
 module Day11
   module Helpers
-    Grid = Struct.new(:serial, :dimension) do
+    class Grid < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :serial
+      attr_accessor :dimension
+
 
       #----------------------------------------------------
       # Public Methods
@@ -108,7 +116,7 @@ module Day11
               sa = xa + ya + p
 
               # return cell
-              t[x][y] = Cell.new(x+1, y+1, p, sa)
+              t[x][y] = Cell.new(x: x + 1, y: y + 1, power: p, sum: sa)
             end
           end
           t

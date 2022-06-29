@@ -1,6 +1,14 @@
 module Day23
   module Helpers
-    Cave = Struct.new(:data) do
+    class Cave < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      # attributes
+      attr_accessor :bots
+
 
       #----------------------------------------------------
       # Public Methods
@@ -39,21 +47,6 @@ module Day23
         @best_bots ||= begin
           bots.map do |b|
             [b.point, b.radius, b.neighbours(bots).size]
-          end
-        end
-      end
-
-      def bots
-        @bots ||= begin
-          id = 0
-          data.map do |str|
-            regexp = Regexp.new('^pos=<(-?\d+),(-?\d+),(-?\d+)>,\s+r=(\d+)$')
-            inputs = str.split(regexp).slice(1, 4).map(&:to_i)
-            coords = inputs.first(3)
-            radius = inputs.last
-            id     = id + 1
-
-            Bot.new(id, Point.new(*coords), radius)
           end
         end
       end

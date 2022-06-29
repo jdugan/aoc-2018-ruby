@@ -1,6 +1,31 @@
 module Day15
   module Helpers
-    Square = Struct.new(:x, :y, :symbol, :siblings, :warrior) do
+    class Square
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      # attributes
+      attr_accessor :x
+      attr_accessor :y
+      attr_accessor :symbol
+      attr_accessor :siblings
+      attr_accessor :warrior
+
+      # constructor
+      def initialize(opts={})
+        @x        = opts.fetch(:x)
+        @y        = opts.fetch(:y)
+        @symbol   = opts.fetch(:symbol)
+        @siblings = opts.fetch(:siblings, {})
+        @warrior  = opts[:warrior]
+      end
+
+
+      #----------------------------------------------------
+      # Public Methods
+      #----------------------------------------------------
 
       #========== ATTRIBUTES ==============================
 
@@ -27,21 +52,6 @@ module Day15
 
       #========== PRINT HELPERS ===========================
 
-      def inspect
-        h = {
-          x:        x,
-          y:        y,
-          symbol:   symbol,
-          siblings: {
-            e: siblings['e'] ? siblings['e'].id : nil,
-            n: siblings['n'] ? siblings['n'].id : nil,
-            s: siblings['s'] ? siblings['s'].id : nil,
-            w: siblings['w'] ? siblings['w'].id : nil
-          },
-          warrior:  warrior ? { id: warrior.id, team: warrior.team } : nil
-        }
-      end
-
       def print
         if warrior
           warrior.team
@@ -63,8 +73,7 @@ module Day15
 
       def neighbors
         @neighbors ||= begin
-          keys = ['n', 'w', 'e', 's']
-          sqs  = keys.map { |k| siblings[k] }.compact.reject(&:wall?)
+          sqs  = siblings.values.compact.reject(&:wall?)
           sqs.sort    # always return squares in reading order
         end
       end
@@ -84,7 +93,7 @@ module Day15
       end
 
       def occupied?
-        !warrior.nil?
+        warrior.present? && warrior.alive?
       end
 
       def wall?
