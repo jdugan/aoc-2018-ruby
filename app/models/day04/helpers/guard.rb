@@ -1,6 +1,14 @@
 module Day04
   module Helpers
-    Guard = Struct.new(:id, :shifts) do
+    class Guard < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :id
+      attr_accessor :shifts
+
 
       #----------------------------------------------------
       # Public Methods

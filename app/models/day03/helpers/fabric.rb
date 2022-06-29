@@ -1,6 +1,13 @@
 module Day03
   module Helpers
-    Fabric = Struct.new(:data) do
+    class Fabric < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :patterns
+
 
       #----------------------------------------------------
       # Public Methods
@@ -11,8 +18,8 @@ module Day03
       end
 
       def unencumbered_pattern_id
-        pp_ids = patterns.map(&:id)
-        oc_ids = overlapped_coords.values.flatten.uniq
+        pp_ids = Set.new(patterns.map(&:id))
+        oc_ids = Set.new(overlapped_coords.values.flatten.uniq)
         (pp_ids - oc_ids).first
       end
 
@@ -30,17 +37,6 @@ module Day03
               result[k] << p.id
             end
             result
-          end
-        end
-      end
-
-      def patterns
-        @patterns ||= begin
-          data.map do |s|
-            regex = Regexp.new('^\#(\d+) @ (\d+),(\d*): (\d+)x(\d+)$')
-            parts = s.split(regex).slice(1, 5).map(&:to_i)
-
-            Pattern.new(*parts)
           end
         end
       end

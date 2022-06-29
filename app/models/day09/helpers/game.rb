@@ -68,7 +68,7 @@ module Day09
       #========== SCORING =================================
 
       def winning_score
-        players.map(&:score).sort.last
+        players.map(&:score).max
       end
 
 

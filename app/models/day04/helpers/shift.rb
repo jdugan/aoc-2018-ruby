@@ -1,6 +1,14 @@
 module Day04
   module Helpers
-    Shift = Struct.new(:id, :data) do
+    class Shift < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :id
+      attr_accessor :events
+
 
       #----------------------------------------------------
       # Public Methods
@@ -39,16 +47,14 @@ module Day04
 
       #========== COLLECTIONS =============================
 
-      def events
-        @events ||= begin
-          ge = data.shift
-          se = data
-          sm = se.first.min rescue 45     # some guards don't sleep
-          if ge.min > sm
-            ge.min = ge.min - 60
-          end
-          se.unshift(ge)
+      def events=(raw_events)
+        ge = raw_events.shift
+        se = raw_events
+        sm = se.first.min rescue 45     # some guards don't sleep
+        if ge.min > sm
+          ge.min = ge.min - 60
         end
+        @events = se.unshift(ge)
       end
 
 

@@ -1,6 +1,16 @@
 module Day08
   module Helpers
-    Node = Struct.new(:header, :parent, :children, :metadata) do
+    class Node < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :header
+      attr_accessor :parent
+      attr_accessor :children
+      attr_accessor :metadata
+
 
       #----------------------------------------------------
       # Public Methods

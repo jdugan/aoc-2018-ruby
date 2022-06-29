@@ -1,6 +1,13 @@
 module Day07
   module Helpers
-    Tree = Struct.new(:data) do
+    class Tree < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :nodes
+
 
       #----------------------------------------------------
       # Public Methods
@@ -55,26 +62,6 @@ module Day07
 
       def reset!
         nodes.values.each(&:reset!)
-      end
-
-
-      #========== DATA ====================================
-
-      def nodes
-        @nodes ||= begin
-          regex = Regexp.new 'Step ([A-Z]) must be finished before step ([A-Z]) can begin.'
-          data.reduce({}) do |hash, s|
-            s1, s2 = s.split(regex).slice(1, 2)
-
-            n1 = hash[s1] ||= Node.new(id: s1)
-            n2 = hash[s2] ||= Node.new(id: s2)
-
-            n1.add_child(n2)
-            n2.add_parent(n1)
-
-            hash
-          end
-        end
       end
 
     end

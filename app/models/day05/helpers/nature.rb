@@ -1,6 +1,13 @@
 module Day05
   module Helpers
-    Nature = Struct.new(:data) do
+    class Nature < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :polymer
+
 
       #----------------------------------------------------
       # Public Methods
@@ -12,13 +19,10 @@ module Day05
 
       def complex_reduction
         arr = ('a'..'z').map do |c|
-          exp = Regexp.new("[#{ c }#{ c.upcase }]")
-          str = polymer
-          str.gsub!(exp, '')
+          exp = Regexp.new(c, true)      # case insensitive
+          str = polymer.gsub(exp, '')
 
-          rs = reduce(str)
-
-          [rs.size, c]
+          [reduce(str).size, c]
         end
         tuple = arr.sort.first
         tuple.first
@@ -30,30 +34,20 @@ module Day05
       #----------------------------------------------------
       private
 
-      #========== DATA ====================================
-
-      def polymer
-        String.new(data.first)
-      end
-
-
       #========== HELPERS =================================
 
-      def destructors
-        @destructors ||= ('a'..'z').map { |c| "#{ c }#{ c.upcase }" }
+      def destructors(str)
+        ('a'..'z').select { |c| str.include?(c) }.map { |c| "#{ c }#{ c.upcase }" }
       end
 
       def reduce(str)
-        is_first   = true
-        has_change = false
-        while is_first || has_change
-          sz = str.size
-          destructors.each do |d|               # this hits a kind of sweet spot between
-            str.gsub!(d, '')                    # minimising loops and maximising opportunities
-            str.gsub!(d.reverse, '')            # for reactions
+        has_change = true
+        while has_change
+          prev_size = str.size
+          destructors(str).each do |exp|
+            str = str.gsub(exp, '').gsub(exp.reverse, '')
           end
-          is_first   = false
-          has_change = str.size < sz
+          has_change = str.size < prev_size
         end
         str
       end

@@ -1,6 +1,14 @@
 module Day10
   module Helpers
-    Sky = Struct.new(:data, :clock) do
+    class Sky < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      attr_accessor :points
+      attr_accessor :clock
+
 
       #----------------------------------------------------
       # Public Methods
@@ -15,7 +23,7 @@ module Day10
 
       def time
         reset!
-        ps = message_points
+        message_points
         clock
       end
 
@@ -28,12 +36,12 @@ module Day10
       #========== ACTIONS =================================
 
       def backward!(steps=1)
-        self[:clock] = clock - steps
+        self.clock = clock - steps
         working_points.each { |p| p.backward!(steps) }
       end
 
       def forward!(steps=1)
-        self[:clock] = clock + steps
+        self.clock = clock + steps
         working_points.each { |p| p.forward!(steps) }
       end
 
@@ -63,7 +71,7 @@ module Day10
 
       def reset!
         @working_points = nil
-        self[:clock] = 0
+        self.clock = 0
       end
 
 
@@ -115,13 +123,8 @@ module Day10
       end
 
       def working_points
-        @working_points ||= begin
-          data.map do |str|
-            regex = Regexp.new('^position=<(-?\s?\d*), (-?\s?\d*)> velocity=<(-?\s?\d*), (-?\s?\d*)>$')
-            parts = str.split(regex).reject(&:blank?).map(&:to_i)
-
-            Point.new(*parts)
-          end
+        @working_points ||= points.map do |p|
+          p.dup
         end
       end
 
