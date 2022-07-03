@@ -1,6 +1,15 @@
 module Day21
   module Helpers
-    Emulator = Struct.new(:data) do
+    class Emulator < Tableless
+
+      #----------------------------------------------------
+      # Configuration
+      #----------------------------------------------------
+
+      # attributes
+      attr_accessor :ip
+      attr_accessor :commands
+
 
       #----------------------------------------------------
       # Public Methods
@@ -42,34 +51,6 @@ module Day21
           end
         end
         a.last
-      end
-
-
-      #----------------------------------------------------
-      # Private Methods
-      #----------------------------------------------------
-      private
-
-      #========== MEMOS ===================================
-
-      def commands
-        @commands ||= begin
-          h = {}
-          data.slice(1, data.size).each.with_index do |str, index|
-            regex = Regexp.new('^(\w{4})\s+(\d+)\s+(\d+)\s+(\d+)$')
-            parts = str.split(regex).slice(1, 4)
-            name  = parts.shift
-
-            h[index] = [name] + parts.map(&:to_i)
-          end
-          h
-        end
-      end
-
-      def ip
-        @ip ||= begin
-          data.first.gsub('#ip', '').strip.to_i
-        end
       end
 
     end

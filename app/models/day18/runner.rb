@@ -1,5 +1,5 @@
 module Day18
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -24,7 +24,7 @@ module Day18
 
     def grid
       @grid ||= begin
-        strs = data.reduce([]) do |array, str|
+        strs = raw_data.reduce([]) do |array, str|
           sqs   = str.strip.split('')
           array << sqs
           array

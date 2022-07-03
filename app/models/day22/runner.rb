@@ -1,5 +1,5 @@
 module Day22
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -11,7 +11,7 @@ module Day22
 
 
     def p2
-      # noop
+      cave.shortest_time
     end
 
 
@@ -21,7 +21,12 @@ module Day22
     private
 
     def cave
-      @cave ||= Helpers::Cave.new(data)
+      @cave ||= begin
+        depth  = raw_data.first.gsub('depth: ', '').strip.to_i
+        coords = raw_data.last.gsub('target: ', '').split(',').map { |s| s.strip.to_i }
+
+        Helpers::Cave.new(depth: depth, target_coords: coords)
+      end
     end
 
   end

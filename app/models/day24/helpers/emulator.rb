@@ -9,10 +9,15 @@ module Day24
       #========== ACTIONS =================================
 
       def boost!(val)
+        reset!
         army = armies.find { |a| a.name == 'Immune System' }
         army.groups.each do |g|
           g.boost = val
         end
+      end
+
+      def reset!
+        @armies = nil
       end
 
 

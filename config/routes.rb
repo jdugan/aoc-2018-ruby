@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     get 'day23' => 'statics#day23', as: :day23
     get 'day24' => 'statics#day24', as: :day24
     get 'day25' => 'statics#day25', as: :day25
+    get 'day25answer' => 'statics#day25answer', as: :day25answer
 
   end
 

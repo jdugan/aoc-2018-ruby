@@ -484,3 +484,7 @@ form#settings input[type="checkbox"] ~ span {
 .sponsor {
   margin: 1em 0;
 }
+
+article *[title] {
+  border-bottom: 1px dotted #ffff66;
+}
