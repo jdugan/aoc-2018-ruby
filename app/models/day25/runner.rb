@@ -1,5 +1,5 @@
 module Day25
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -21,7 +21,7 @@ module Day25
     private
 
     def calculator
-      @calculator ||= Helpers::Calculator.new(data)
+      @calculator ||= Helpers::Calculator.new(raw_data)
     end
 
   end

@@ -36,5 +36,6 @@ class StaticsController < ApplicationController
   def day23; end
   def day24; end
   def day25; end
+  def day25answer; end
 
 end

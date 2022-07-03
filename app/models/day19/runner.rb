@@ -1,5 +1,5 @@
 module Day19
-  class Runner < AbstractRunner
+  class Runner < BaseRunner
 
     #------------------------------------------------------
     # Public Methods
@@ -21,7 +21,7 @@ module Day19
     private
 
     def emulator
-      @emulator ||= Helpers::Emulator.new(data)
+      @emulator ||= Helpers::Emulator.new(raw_data)
     end
 
   end

@@ -15,25 +15,27 @@ module Day22
       # Public Methods
       #----------------------------------------------------
 
-      #========== ACTIONS =================================
+      #========== IDS =====================================
 
-      def print
-        case location_type
-        when :mouth
-          'M'
-        when :target
-          'T'
-        else
-          case geologic_type
-          when :rocky then '.'
-          when :narrow then '|'
-          else '='
-          end
+      def id
+        @id ||= begin
+          "#{ x },#{ y }"
+        end
+      end
+
+      def neighbor_ids
+        @neighbor_ids ||= begin
+          [
+            "#{ x - 1 },#{ y }",
+            "#{ x + 1 },#{ y }",
+            "#{ x },#{ y - 1 }",
+            "#{ x },#{ y + 1 }"
+          ]
         end
       end
 
 
-      #========== MEMOS ===================================
+      #========== ATTRIBUTES ==============================
 
       def erosion_level
         @erosion_level ||= begin
@@ -57,6 +59,24 @@ module Day22
           when :rocky   then 0
           when :wet     then 1
           when :narrow  then 2
+          end
+        end
+      end
+
+
+      #========== ACTIONS =================================
+
+      def print
+        case location_type
+        when :mouth
+          'M'
+        when :target
+          'T'
+        else
+          case geologic_type
+          when :rocky then '.'
+          when :narrow then '|'
+          else '='
           end
         end
       end
