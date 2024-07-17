@@ -2,7 +2,7 @@
 /.bundle
 
 # data
-data/**/input.txt
+public/data/**/input.txt
 
 # debugging
 .byebug_history
