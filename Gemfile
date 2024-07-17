@@ -4,7 +4,7 @@
 
 source 'http://rubygems.org'
 
-ruby '3.0.0'
+ruby '3.3.3'
 
 
 #----------------------------------------------
@@ -12,10 +12,10 @@ ruby '3.0.0'
 #----------------------------------------------
 
 # rails, etc.
-gem 'rails',              '7.0.3'
+gem 'rails',              '7.1.3.4'
 
 # database
-gem 'sqlite3'
+gem 'sqlite3',            '~> 1.4'
 
 # server
 gem 'bootsnap'

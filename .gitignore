@@ -1,6 +1,9 @@
 # bundler
 /.bundle
 
+# data
+data/**/input.txt
+
 # debugging
 .byebug_history
 

@@ -17,7 +17,7 @@ The examples are representative of my thinking and coding style.
 
 ### Prerequisites
 
-The project requires `ruby 3.0.0`, but any reasonably current version of
+The project requires `ruby 3.3.3`, but any reasonably current version of
 Ruby will likely work.  I tend to code done the middle of any language
 specification.
 
